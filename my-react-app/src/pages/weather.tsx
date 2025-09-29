@@ -28,6 +28,7 @@ export default function Weather() {
   const [history,setHistory]= useState(""); //track last searched value
   const [queries,setQueries] =useState([]); //store multiple previous searches
   const [currentVideo, setCurrentVideo] = useState(sunVid); //current background video
+  const [selectedHour, setSelectedHour] = useState(null); //selecting a hourly div to show more details
 
   // Debug function to log current state
   useEffect(() => {
@@ -296,7 +297,7 @@ export default function Weather() {
           <div className="bg-black/30 p-3 sm:p-4 rounded-lg w-full sm:flex-1 h-auto sm:h-[450px] flex flex-col sm:flex-row items-start justify-start shadow-lg shadow-white/10 gap-2 sm:gap-3">
             {/* Left inner div */}
             <div className="flex sm:grid gap-3 text-base">
-            <div className="bg-white/30 p-3 sm:p-4 rounded-lg w-full sm:w-48 h-32 sm:h-43 shadow-lg shadow-black/30">
+            <div className="bg-white/30 p-2 sm:p-6  sm:pl-8 rounded-lg w-full sm:w-48 h-32 sm:h-43 shadow-lg shadow-black/30">
             {weather ? ( //if weather data available show it
                 <div className="flex flex-col items-center sm:w-30">
                   <img
@@ -333,7 +334,7 @@ export default function Weather() {
               <div className="bg-white/40 rounded-lg w-full sm:w-122 h-24 sm:h-30 shadow-lg shadow-black/30">
                   <iframe
                     className="w-full h-full p-2 sm:p-5 bg-white/100 rounded-lg "
-                    src="https://open.spotify.com/embed/track/156LzfvMNKuXuiot4uzhGD?utm_source=generator" //a drake song nyana!!
+                    src="https://open.spotify.com/embed/track/4xRxYWgAtL6pzRz94GlZlA?utm_source=generator" //a drake song nyana!!
                     //frameBorder="0" // --this one says deprecated, i dont know whatit means but it doesnt work so i commented it out
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
@@ -345,16 +346,18 @@ export default function Weather() {
                 {forecast
                   ? forecast.list.slice(0, 4).map((hour, index) => ( //first 4 forecast entries
                       <div
+                        onClick={() => setSelectedHour(index)}
                         key={index}
                         className="bg-white/40 p-2 sm:p-4 rounded-lg w-full sm:w-28 h-24 sm:h-32 shadow-lg shadow-black/30 flex flex-col items-center justify-center"
                       >
                         <p className="text-xs sm:text-md text-white font-bold">
-                          {new Date(hour.dt_txt).getHours()}:02 {/*one past 😂*/}
+                          {new Date(hour.dt_txt).getHours()}:01 {/*one past 😂*/}
                         </p>
                         <img
                           src={`https://openweathermap.org/img/wn/${hour.weather[0].icon}.png`}
                           alt="hourly icon"
                           className="w-8 h-8 sm:w-13 sm:h-13"
+                          
                         />
                         <p className="text-xs sm:text-md text-white font-bold">{Math.round(hour.main.temp)}°C</p> {/*hourly temp*/}
                       </div>
@@ -371,11 +374,15 @@ export default function Weather() {
                       <Spinner variant="infinite" className="text-black" size={32}/>
                     </div>
                     <div className="bg-white/40 p-2 sm:p-4 rounded-lg w-full sm:w-28 h-24 sm:h-32 shadow-lg shadow-black/30 flex items-center justify-center">
-                      <Spinner variant="infinite" className="text-black" size={32}/>
+                      <Spinner variant="ring" className="text-black" size={32}/>
                     </div>
                     </>
                     )}
               </div>
+              {/*{selectedHour && 
+              <div className="bg-white/40 p-2 sm:p-4 rounded-lg w-full sm:w-28 h-50 sm:h-50 shadow-lg shadow-black/30 flex items-center justify-center">
+                  
+              </div>}*/}
   
               {/* Day divs container */}
               <div className="flex flex-wrap gap-2 sm:gap-3">
