@@ -35,7 +35,7 @@ A modern, responsive weather application with dynamic background videos that cha
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/itumeleng-itu/Weather.git
-   cd Weather/my-react-app
+   cd Weather
    ```
 
 2. **Install dependencies:**
@@ -66,7 +66,7 @@ A modern, responsive weather application with dynamic background videos that cha
 ## Project Structure
 
 ```
-my-react-app/
+Weather/
 ├── src/
 │   ├── components/
 │   │   └── ui/           # Shadcn/ui components
@@ -80,7 +80,10 @@ my-react-app/
 │   ├── App.tsx           # Main app component
 │   └── main.tsx          # Entry point
 ├── public/               # Static assets
-└── package.json
+├── index.html            # Entry HTML file
+├── vite.config.ts        # Vite configuration
+├── tsconfig.json         # TypeScript configuration
+└── package.json          # Dependencies and scripts
 ```
 
 ## Features in Detail
