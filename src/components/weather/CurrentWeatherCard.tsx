@@ -1,12 +1,15 @@
 import React from "react";
 import type { WeatherData } from "@/types/weather";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
+import { useUnit } from "@/context/UnitContext";
 
 interface CurrentWeatherCardProps {
   weather: WeatherData | null;
 }
 
 export const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({ weather }) => {
+  const { formatTemp } = useUnit();
+
   return (
     <div className="bg-white/30 p-2 sm:p-6 sm:pl-8 rounded-lg w-full sm:w-48 h-32 sm:h-43 shadow-lg shadow-black/30">
       {weather ? (
@@ -20,8 +23,7 @@ export const CurrentWeatherCard: React.FC<CurrentWeatherCardProps> = ({ weather 
             {weather.name}
           </h1>
           <h1 className="font-bold text-center text-white text-sm sm:text-xl">
-            {Math.floor(weather.main.temp)}°C/
-            {Math.floor(weather.main.temp * (9 / 5) + 32)}F
+            {formatTemp(weather.main.temp)}
           </h1>
         </div>
       ) : (

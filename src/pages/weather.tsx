@@ -16,6 +16,9 @@ import { CurrentWeatherCard } from "@/components/weather/CurrentWeatherCard";
 import { WeatherStats } from "@/components/weather/WeatherStats";
 import { ForecastPanel } from "@/components/weather/ForecastPanel";
 import { LocationRequestDialog } from "@/components/weather/LocationRequestDialog";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { UnitToggle } from "@/components/ui/UnitToggle";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Weather() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -25,6 +28,7 @@ export default function Weather() {
   const [queries, setQueries] = useState<string[]>([]);
   const [currentVideo, setCurrentVideo] = useState(sunVid);
   const [showLocationDialog, setShowLocationDialog] = useState(false);
+  const { theme } = useTheme();
 
   const fetchWeatherByCoords = useCallback(async (lat: number, lon: number) => {
     try {
@@ -68,7 +72,6 @@ export default function Weather() {
           setShowLocationDialog(true);
         }
       } catch (e) {
-        // Fallback for browsers that don't support permissions API for geolocation
         setShowLocationDialog(true);
       }
     };
@@ -105,17 +108,22 @@ export default function Weather() {
   };
 
   return (
-    <div className="relative w-screen min-h-screen overflow-hidden bg-black">
+    <div className={`relative w-screen min-h-screen overflow-hidden ${theme === "light" ? "bg-slate-100" : "bg-black"}`}>
       <video
         autoPlay
         loop
         muted
         playsInline
-        key={weather?.weather?.[0]?.main || 'default'}
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        key={currentVideo}
+        className={`absolute inset-0 w-full h-full object-cover z-0 ${theme === "light" ? "opacity-60" : "opacity-100"}`}
       >
         <source src={currentVideo} type="video/mp4" />
       </video>
+
+      <div className="absolute top-4 right-4 z-30 flex gap-2">
+        <UnitToggle />
+        <ThemeToggle />
+      </div>
 
       <div className="relative z-10 flex items-center justify-center min-h-screen p-2 sm:p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 bg-transparent/50 p-3 sm:p-4 rounded-lg w-full max-w-4xl">

@@ -13,6 +13,8 @@ export function selectVideoByWeather(weatherData: WeatherData) {
     const mainWeather = weatherData.weather[0].main.toLowerCase();
     const description = weatherData.weather[0].description.toLowerCase();
 
+    console.log(mainWeather, description);
+
     if (
         mainWeather.includes("clear") ||
         mainWeather.includes("sun") ||
@@ -37,9 +39,11 @@ export function selectVideoByWeather(weatherData: WeatherData) {
         return stormVid;
     } else if (
         mainWeather.includes("cloud") ||
+        mainWeather.includes("clouds") ||
         mainWeather.includes("overcast") ||
         description.includes("cloud") ||
-        description.includes("overcast")
+        description.includes("overcast") ||
+        description.includes("clouds")
     ) {
         return cloudsVid;
     } else {

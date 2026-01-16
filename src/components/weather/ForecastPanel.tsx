@@ -1,6 +1,7 @@
 import React from "react";
 import type { ForecastData } from "@/types/weather";
 import { Spinner } from "@/components/ui/shadcn-io/spinner";
+import { useUnit } from "@/context/UnitContext";
 
 interface ForecastPanelProps {
   forecast: ForecastData | null;
@@ -11,6 +12,7 @@ export const ForecastPanel: React.FC<ForecastPanelProps> = ({
   forecast,
   setSelectedHour,
 }) => {
+  const { formatTemp } = useUnit();
   const hourlyForecast = () => {
     if (!forecast) return [];
     const now = new Date();
@@ -54,7 +56,7 @@ export const ForecastPanel: React.FC<ForecastPanelProps> = ({
                 className="w-8 h-8 sm:w-13 sm:h-13"
               />
               <p className="text-xs sm:text-md text-white font-bold">
-                {Math.round(hour.main.temp)}°C
+                {formatTemp(hour.main.temp)}
               </p>
             </div>
           ))
@@ -88,7 +90,7 @@ export const ForecastPanel: React.FC<ForecastPanelProps> = ({
                 className="w-10 h-10 sm:w-15 sm:h-15"
               />
               <p className="text-white text-sm sm:text-lg font-bold">
-                {Math.round(day.main.temp)}°C
+                {formatTemp(day.main.temp)}
               </p>
             </div>
           ))
